@@ -1,9 +1,9 @@
 {
-  "devToolsPort": 19003,
+  "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": 19002,
-  "packagerPid": 51037,
-  "expoServerNgrokUrl": "https://4y-66m.anonymous.focus.exp.direct",
-  "packagerNgrokUrl": "https://packager.4y-66m.anonymous.focus.exp.direct",
-  "ngrokPid": 51045
+  "packagerPort": 19001,
+  "packagerPid": 11204,
+  "expoServerNgrokUrl": "https://qc-nxf.anonymous.focus.exp.direct",
+  "packagerNgrokUrl": "https://packager.qc-nxf.anonymous.focus.exp.direct",
+  "ngrokPid": 8040
 }
