@@ -66,7 +66,9 @@ export default function App() {
           </SafeAreaView>
   );
 }
-
+App.navigationOptions = {
+  title: 'Today',
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
