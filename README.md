@@ -1,6 +1,6 @@
 # focus
 
-A new Flutter project.
+Focus App
 
 ## Getting Started
 
