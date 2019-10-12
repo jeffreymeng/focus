@@ -1,14 +1,7 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import Constants from "expo-constants";
+import { StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 
-export default function Item({ id, title, subtitle, selected, onSelect }) {
+export default function ToDoListItem({ id, title, subtitle, selected, onSelect }) {
   return (
       <TouchableOpacity
           onPress={() => onSelect(id)}
@@ -38,8 +31,8 @@ export default function Item({ id, title, subtitle, selected, onSelect }) {
       </TouchableOpacity>
   );
 }
-const styles = StyleSheet.create({
 
+const styles = StyleSheet.create({
   item: {
     backgroundColor: '#F0F0F0',
     padding: 20,
