@@ -12,18 +12,23 @@ const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
     title: 'Do Math Homework',
+    subtitle:'subtitle',
   },
   {
     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
     title: 'Do Chem Homework',
+    subtitle:'subtitle',
+
   },
   {
     id: '58694a0f-3da1-471f-bd96-145571e29d72',
     title: 'Feed the cat',
+    subtitle:'subtitle',
+
   },
 ];
 
-function Item({ id, title, selected, onSelect }) {
+function Item({ id, title, subtitle, selected, onSelect }) {
   return (
           <TouchableOpacity
                   onPress={() => onSelect(id)}
@@ -32,7 +37,9 @@ function Item({ id, title, selected, onSelect }) {
                     { backgroundColor: selected ? '#C0C0C0' : '#F0F0F0' },
                   ]}
           >
+            
             <Text style={styles.title}>{title}</Text>
+            <Text style={styles.subtitle}>{subtitle}</Text>
           </TouchableOpacity>
   );
 }
@@ -58,6 +65,7 @@ export default function App() {
                             <Item
                                     id={item.id}
                                     title={item.title}
+                                    subtitle={item.subtitle}
                                     selected={!!selected.get(item.id)}
                                     onSelect={onSelect}
                             />
@@ -83,5 +91,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
+  },
+  subtitle: {
+    fontSize: 12,
   },
 });
