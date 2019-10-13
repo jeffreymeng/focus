@@ -6,6 +6,7 @@ import Icon from '../components/Icon';
 import TodayScreen from '../screens/today/TodayScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import FeedScreen from "../screens/feed/FeedScreen";
+import AddItemScreen from "../screens/add_item/AddItemScreen";
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -15,6 +16,7 @@ const config = Platform.select({
 const TodayStack = createStackNavigator(
   {
     Today: TodayScreen,
+    AddItem: AddItemScreen,
   },
   config
 );

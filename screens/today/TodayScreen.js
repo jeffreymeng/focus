@@ -1,6 +1,8 @@
 import React from 'react';
+import {Fab, Icon, View} from 'native-base';
+
 import ToDoList from '../../components/ToDoList';
-import { db, auth } from '../../firebase';
+import {auth, db} from '../../firebase';
 
 export default function TodayScreen() {
   const [todoItems, setTodoItems] = React.useState([]);
@@ -20,8 +22,19 @@ export default function TodayScreen() {
       });
   }, []);
 
-  return <ToDoList todoItems={todoItems} />;
+  return (
+    <View style={{height: "100%"}}>
+      <ToDoList todoItems={todoItems}/>
+      <Fab
+        style={{backgroundColor: '#5067FF'}}
+        position="bottomRight"
+        onPress={() => navigation.navigate("AddItem")}>
+        <Icon name="add"/>
+      </Fab>
+    </View>
+  );
 }
+
 TodayScreen.navigationOptions = {
   title: 'Today',
 };
