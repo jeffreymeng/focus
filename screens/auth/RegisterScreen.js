@@ -11,14 +11,15 @@ import { auth, db } from '../../firebase';
 
 export default function LinksScreen({ navigation }) {
   const [username, setUsername] = React.useState('');
+  const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   function registerFirebase() {
-    auth.createUserWithEmailAndPassword(username, password).then(
+    auth.createUserWithEmailAndPassword(email, password).then(
       ({ user }) => {
         db.collection('users')
           .doc(user.uid)
-          .set({ exists: true })
+          .set({ exists: true, username })
           .catch(err => {
             alert(err.message);
           })
@@ -37,10 +38,15 @@ export default function LinksScreen({ navigation }) {
       <Text style={styles.label}>Username</Text>
       <TextInput
         style={styles.input}
-        keyboardType="email-address"
-        autoCapitalize="none"
         onChangeText={text => setUsername(text)}
         value={username}
+      />
+      <TextInput
+        style={styles.input}
+        keyboardType="email-address"
+        autoCapitalize="none"
+        onChangeText={text => setEmail(text)}
+        value={email}
       />
       <Text style={styles.label}>Password</Text>
       <TextInput

@@ -48,7 +48,22 @@ export default function WorkingScreen({ navigation }) {
                 checked: true,
               })
               .then(() => {
-                navigation.navigate(params.from);
+                db.collection('users')
+                  .doc(auth.currentUser.uid)
+                  .get()
+                  .then(doc => {
+                    const username = doc.data().username;
+                    db.collection('feed')
+                      .add({
+                        completed: todo.title,
+                        hotStreak: false,
+                        name: username,
+                        time: new Date().getTime(),
+                      })
+                      .then(() => {
+                        navigation.navigate(params.from);
+                      });
+                  });
               });
           },
         },
@@ -131,7 +146,7 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   buttonContainer: {
     width: 80,

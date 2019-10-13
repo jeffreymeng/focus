@@ -29,9 +29,9 @@ export default function TodayScreen({ navigation }) {
             ).sort(function(x, y) {
               let a = new Date(x.date).getTime(), b = new Date(y.date).getTime();
 
-              // Checked ones always show up first.
-              if (x.checked) a -= Math.pow(10,13);
-              if (y.checked) b -= Math.pow(10,13);
+              // Unchecked ones always show up first.
+              if (x.checked) a += Math.pow(10,13);
+              if (y.checked) b += Math.pow(10,13);
               return a - b;
             })
           );

@@ -1,60 +1,83 @@
 import React from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import Bo from "../../components/BoldText";
-import FeedItem from "./FeedItem";
-import {Icon} from "native-base";
+import Bo from '../../components/BoldText';
+import FeedItem from './FeedItem';
+import { Icon } from 'native-base';
 
-let It = (props) => <Text style={{fontStyle: "italic"}}>{props.children}</Text>;
+import { db } from '../../firebase';
+
+let It = props => <Text style={{ fontStyle: 'italic' }}>{props.children}</Text>;
 
 export default function LinksScreen() {
+  const [feedData, setFeedData] = React.useState([]);
+  React.useEffect(
+    () =>
+      db.collection('feed').onSnapshot(querySnapshot => {
+        console.log('got update');
+        let feeds = [];
+        querySnapshot.forEach(doc => {
+          feeds.push({
+            id: doc.id,
+            ...doc.data(),
+          });
+        });
+        setFeedData(feeds.sort((a, b) => b.time - a.time));
+      }),
+    []
+  );
+
   return (
-    <View style={{display:"flex",height:"100%"}}>
-      <View style={{
-        paddingTop: 20, paddingLeft: 20, paddingRight: 20, paddingBottom: 20,
-        borderBottomWidth: 0.5,
-        borderBottomColor: "#d1d1d1",
-      }}>
+    <View style={{ display: 'flex', height: '100%' }}>
+      <View
+        style={{
+          paddingTop: 20,
+          paddingLeft: 20,
+          paddingRight: 20,
+          paddingBottom: 20,
+          borderBottomWidth: 0.5,
+          borderBottomColor: '#d1d1d1',
+        }}
+      >
         <Text>
-          <Bo>My Friends</Bo>{"\n"}
-          <Bo>Richard Liu:</Bo> Hot Streak! &nbsp;<Icon name='flame' style={{fontSize: 24, color: "orange"}}/>{"\n"}
-          <Bo>Jeffrey Meng:</Bo> Working on <It>Math Homework</It>{"\n"}
+          <Bo>My Friends</Bo>
+          {'\n'}
+          <Bo>Richard Liu:</Bo> Hot Streak! &nbsp;
+          <Icon name="flame" style={{ fontSize: 24, color: 'orange' }} />
+          {'\n'}
+          <Bo>Jeffrey Meng:</Bo> Working on <It>Math Homework</It>
+          {'\n'}
           <Bo>Nathan Wang:</Bo> Working on <It>Fixing Bugs</It>
         </Text>
       </View>
       <ScrollView style={styles.container}>
-        <FeedItem>
-          <Bo>Richard</Bo> is on a <Bo>Hot Streak</Bo>! &nbsp;<Icon name='flame'
-                                                                    style={{fontSize: 24, color: "orange"}}/>
-        </FeedItem>
-        <FeedItem>
-          <Bo>Richard</Bo> just completed <It>Washing Dishes</It>!
-        </FeedItem>
-        <FeedItem>
-          <Bo>Richard</Bo> just completed <It>Calculus Chapter 4</It>!
-        </FeedItem>
-        <FeedItem>
-          <Bo>Nathan</Bo> just completed <It>Chapter 5.1 Math Homework</It>!
-        </FeedItem>
-        <FeedItem>
-          <Bo>Richard</Bo> just completed <It>Hackathon Project</It>!
-        </FeedItem>
-        <FeedItem>
-          <Bo>Jeffrey</Bo> just completed <It>Spanish Lecture Notes</It>!
-        </FeedItem>
-        <FeedItem>
-          <Bo>Richard</Bo> just completed <It>Hackathon Project</It>!
-        </FeedItem>
+        {feedData.map(feedItem => (
+          <FeedItem key={feedItem.id}>
+            <Bo>{feedItem.name}</Bo>{' '}
+            {feedItem.hotStreak ? 'is on a' : 'just completed'}
+            {feedItem.hotStreak ? (
+              <>
+                &nbsp; <Bo>Hot Streak</Bo>! &nbsp;
+              </>
+            ) : (
+              <>
+                &nbsp; <It>{feedItem.completed}</It>
+              </>
+            )}
+            {feedItem.hotStreak && (
+              <Icon name="flame" style={{ fontSize: 24, color: 'orange' }} />
+            )}
+          </FeedItem>
+        ))}
       </ScrollView>
     </View>
   );
 }
 
 LinksScreen.navigationOptions = {
-  title: "Feed",
+  title: 'Feed',
 };
 
 const styles = StyleSheet.create({
-  container: {
-  },
+  container: {},
 });

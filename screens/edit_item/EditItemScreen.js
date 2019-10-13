@@ -86,6 +86,7 @@ export default function EditItemScreen({ navigation }) {
             <Button
               hasText
               transparent
+              disabled={params.checked}
               onPress={() => setShowTimePicker(!showTimePicker)}
             >
               <Text>
