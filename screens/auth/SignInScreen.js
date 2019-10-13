@@ -27,22 +27,24 @@ export default function LinksScreen({ navigation }) {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.label}>Username</Text>
-      <TextInput
-        style={styles.input}
-        keyboardType="email-address"
-        autoCapitalize="none"
-        onChangeText={text => setUsername(text)}
-        value={username}
-      />
-      <Text style={styles.label}>Password</Text>
-      <TextInput
-        style={styles.input}
-        secureTextEntry={true}
-        onChangeText={text => setPassword(text)}
-        value={password}
-      />
-      <Button title="Login" onPress={loginFirebase} />
+      <View style={styles.formWrapper}>
+        <Text style={styles.label}>Username</Text>
+        <TextInput
+          style={styles.input}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          onChangeText={text => setUsername(text)}
+          value={username}
+        />
+        <Text style={styles.label}>Password</Text>
+        <TextInput
+          style={styles.input}
+          secureTextEntry={true}
+          onChangeText={text => setPassword(text)}
+          value={password}
+        />
+        <Button title="Login" onPress={loginFirebase} />
+      </View>
       <View style={styles.buttonWrapper}>
         <Button
           title="Register"
@@ -63,10 +65,15 @@ const styles = StyleSheet.create({
     paddingTop: 100,
     paddingLeft: 20,
     paddingRight: 20,
+    flexDirection:'column',
+
   },
   label: {
     fontSize: 12,
     marginBottom: 5,
+  },
+  formWrapper: {
+    flex:1,
   },
   input: {
     borderWidth: 1,
@@ -77,7 +84,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   buttonWrapper: {
-    marginTop: 300,
+    flex:1,
+    marginTop:200,
     flexDirection: 'row',
     justifyContent: 'center',
   },
