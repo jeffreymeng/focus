@@ -37,7 +37,7 @@ function CheckboxIcon(props) {
 }
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: '#F0F0F0',
+    backgroundColor: '#e6ecff',
     padding: 20,
     borderRadius:8,
     marginVertical: 6,
