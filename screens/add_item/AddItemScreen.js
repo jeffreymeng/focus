@@ -1,62 +1,63 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import { Container, Content, Form, Item, Input, Text, Button, Label, } from "native-base";
-import DateTimePicker from "react-native-modal-datetime-picker";
+import { StyleSheet, DatePickerIOS } from 'react-native';
+import {
+  Container,
+  View,
+  Content,
+  Form,
+  Item,
+  Input,
+  Text,
+  Button,
+  Label,
+} from 'native-base';
 
-export default class AddItemScreen extends Component {
-  state = {
-    date: null,
-    showTimePicker: false,
-    task: "",
-  };
+export default function AddItemScreen() {
+  const [date, setDate] = React.useState(new Date());
+  const [showTimePicker, setShowTimePicker] = React.useState(false);
+  const [task, setTask] = React.useState('');
 
-  setShowTimePicker = (value) => {
-    this.setState({
-      showTimePicker: value
-    });
-  };
-
-  setDate = (date) => {
-    this.setState({ date });
-  };
-
-  handleTaskChange = (task) => {
-    this.setState({ task });
-  };
-
-  handleFormSubmit = () => {
-    console.log("Adding a new task with label " + this.state.task + " and date " + this.state.date);
-  };
-
-  render() {
-    return (
-      <Container>
-        <Content>
-          <Form>
-            <Item inlineLabel>
-              <Label>Add Task</Label>
-              <Input  value={this.state.task} onChangeText={this.handleTaskChange}/>
-            </Item>
-            <Item inlineLabel last onPress={() => this.setShowTimePicker(true)}>
-              <Label>Schedule Time</Label>
-              <Input value={this.state.date?.toString()} disabled />
-            </Item>
-            <DateTimePicker
-              isVisible={this.state.showTimePicker}
-              onConfirm={date => {this.setDate(date); this.setShowTimePicker(false);}}
-              mode="time"
-              onCancel={() => this.setShowTimePicker(false)}
-            />
-            <Button onPress={this.handleFormSubmit}>
-              <Text>Click Me!</Text>
-            </Button>
-          </Form>
-        </Content>
-      </Container>
-    );
+  function handleFormSubmit() {
+    console.log(`Adding a new tastk with label ${task} and date ${date}`);
   }
+
+  return (
+    <Container>
+      <Content style={styles.container}>
+        <Form>
+          <Item inlineLabel>
+            <Label>Add Task</Label>
+            <Input value={task} onChangeText={setTask} />
+          </Item>
+          <Item inlineLabel>
+            <Label>Schedule Time</Label>
+            <Button
+              hasText
+              transparent
+              onPress={() => setShowTimePicker(!showTimePicker)}
+            >
+              <Text>{date ? date.toString() : ''}</Text>
+            </Button>
+          </Item>
+          {showTimePicker && (
+            <DatePickerIOS date={date} onDateChange={setDate} />
+          )}
+          <Button onPress={handleFormSubmit}>
+            <Text>Click Me!</Text>
+          </Button>
+        </Form>
+      </Content>
+    </Container>
+  );
 }
 
 AddItemScreen.navigationOptions = {
-  title: "New Todo",
+  title: 'New Todo',
 };
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+  },
+});
