@@ -32,9 +32,11 @@ export default function TomorrowScreen({navigation}) {
     []
   );
 
-  function onCompletionChange(id, checked) {
+  function onCompletionChange(id) {
+    let currentTodo = todoItems.filter(todo => todo.id === id)[0];
+
     Alert.alert(
-      "Reschedule Task?",
+      "Reschedule '" + currentTodo.title +  "'?",
       'Would you like to reschedule this task to today?',
       [
         {
@@ -45,8 +47,21 @@ export default function TomorrowScreen({navigation}) {
         },
         {
           text: 'Reschedule', onPress: () => {
+
+            const now = new Date();
+            currentTodo.date = now;
             console.log("RESCHEDULE");
-            // TODO add resched code
+            db
+                .collection('users')
+                .doc(userId)
+                .collection('todos')
+                .doc(id).update({
+              date:now.toISOString()
+            });
+            navigation.navigate('Working', {
+              from: 'Today',
+              todo:currentTodo
+            });
           }
         },
       ],
