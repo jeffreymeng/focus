@@ -4,7 +4,7 @@ import {Fab, Icon, View} from 'native-base';
 import ToDoList from '../../components/ToDoList';
 import {auth, db} from '../../firebase';
 
-export default function TodayScreen() {
+export default function TodayScreen({ navigation }) {
   const [todoItems, setTodoItems] = React.useState([]);
   const userId = auth.currentUser.uid;
 
