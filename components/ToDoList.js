@@ -3,14 +3,8 @@ import {
   SafeAreaView,
   FlatList,
   StyleSheet,
-  TouchableHighlight,
-  Text,
-  View,
-  Platform,
 } from 'react-native';
 import ToDoListItem from '../components/ToDoListItem';
-import Constants from 'expo-constants';
-import Icon from './Icon';
 
 export default function ToDoList({ todoItems }) {
   const [selected, setSelected] = React.useState(new Map());
@@ -35,6 +29,7 @@ export default function ToDoList({ todoItems }) {
         data={todoItems}
         renderItem={({ item }) => (
           <ToDoListItem
+            key={item.id}
             id={item.id}
             title={item.title}
             subtitle={renderTime(item.date)}
@@ -45,19 +40,7 @@ export default function ToDoList({ todoItems }) {
         keyExtractor={item => item.id}
         extraData={selected}
       />
-      <View>
-        <TouchableHighlight
-          style={styles.addButton}
-          underlayColor="#809fff"
-          onPress={() => alert('Yaay!')}
-        >
-          <Icon
-            name={Platform.OS === 'ios' ? `ios-add` : 'md-add'}
-            size={50}
-            color={'white'}
-          />
-        </TouchableHighlight>
-      </View>
+
     </SafeAreaView>
   );
 }
@@ -65,16 +48,5 @@ export default function ToDoList({ todoItems }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  addButton: {
-    borderRadius: 30,
-    width: 60,
-    height: 60,
-    backgroundColor: '#809fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    right: 20,
-    position: 'absolute',
-    bottom: 20,
-  },
+  }
 });

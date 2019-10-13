@@ -8,7 +8,7 @@ export default function ToDoItemCheckbox(props) {
       <TouchableHighlight
 
           style = {props.checked ? [styles.checkbox, styles.checkboxChecked] : styles.checkbox}
-          underlayColor = '#ccc'
+          underlayColor = '#4d79ff'
           onPress = { props.onPress }
       >
 

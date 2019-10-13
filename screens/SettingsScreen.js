@@ -37,11 +37,10 @@ export default function SettingsScreen({ navigation }) {
     let notificationId = Notifications.scheduleLocalNotificationAsync(
         {
           title: "I'm Scheduled",
-          body: 'Not the same body! Sent at ' + new Date().getTime(),
+          body: 'Not the same body! Sent at ' + (new Date() + ''),
         },
         {
-          repeat: 'minute',
-          time: new Date().getTime() + 10000,
+          time: new Date().getTime() + 100,
         },
     );
     console.log(notificationId);

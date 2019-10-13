@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { StyleSheet } from 'react-native';
+import { StyleSheet, DatePickerIOS } from 'react-native';
 import {
   Container,
   View,
@@ -12,12 +12,14 @@ import {
   Button,
   Label,
 } from 'native-base';
-import DateTimePicker from "react-native-modal-datetime-picker";
 
-import { db, auth } from "../../firebase";
+import { db, auth } from '../../firebase';
 
 export default function AddItemScreen({ navigation }) {
-  const [date, setDate] = React.useState(new Date());
+  const params = navigation.state.params;
+  let today = new Date();
+
+  const [date, setDate] = React.useState(params.from === "Today" ? today : today.setDate(today.getDate() + 1));
   const [showTimePicker, setShowTimePicker] = React.useState(false);
   const [task, setTask] = React.useState('');
 
@@ -31,61 +33,54 @@ export default function AddItemScreen({ navigation }) {
       if (doc.data) {
         const oldTodos = doc.data().todos;
         currentDoc
-          .set({
-            todos: [
-              ...oldTodos,
-              {
-                id: Math.random() + 'abc',
-                title: task,
-                date: date.toISOString(),
-              },
-            ],
-          })
-          .then(() => {
-            navigation.navigate('Today');
-          })
-          .catch(err => {
-            alert(err.message);
-            navigation.navigate('Today');
-          });
+            .set({
+              todos: [
+                ...oldTodos,
+                {
+                  title: task,
+                  id:new Array(32).fill("").map(() => "ABCDEFGHIJKLMNOPQRSTUVQXYZabcdefghijklmnopqrstuvwxyz0123456789".split("")[Math.floor(Math.random() * (26 * 2 + 10))]).join(""),
+                  date: date.toISOString(),
+                },
+              ],
+            })
+            .then(() => {
+              navigation.navigate(params.from);
+            })
+            .catch(err => {
+              alert(err.message);
+              navigation.navigate(params.from);
+            });
       }
     });
   }
 
   return (
-    <Container>
-      <Content style={styles.container}>
-        <Form>
-          <Item inlineLabel>
-            <Label>Task Name</Label>
-            <Input value={task} onChangeText={setTask} />
-          </Item>
-          <Item inlineLabel>
-            <Label>Schedule Time</Label>
-            <Button
-              hasText
-              transparent
-              onPress={() => setShowTimePicker(!showTimePicker)}
-            >
-              <Text>{date ? date.toString() : ''}</Text>
+      <Container>
+        <Content style={styles.container}>
+          <Form>
+            <Item inlineLabel>
+              <Label>Add Task</Label>
+              <Input value={task} onChangeText={setTask} />
+            </Item>
+            <Item inlineLabel>
+              <Label>Schedule Time</Label>
+              <Button
+                  hasText
+                  transparent
+                  onPress={() => setShowTimePicker(!showTimePicker)}
+              >
+                <Text>{date ? (date.getHours() % 12) + ":" + ((date.getMinutes() > 9 ? "" : "0") + date.getMinutes()) + " " + (date.getHours() > 12 ? "PM" : "AM") : ''}</Text>
+              </Button>
+            </Item>
+            {showTimePicker && (
+                <DatePickerIOS date={date} onDateChange={setDate} mode={"time"}/>
+            )}
+            <Button onPress={handleFormSubmit}>
+              <Text>Add Item</Text>
             </Button>
-          </Item>
-          <Button style={{ marginTop: 15 }} onPress={handleFormSubmit}>
-            <Text>Add Task</Text>
-          </Button>
-        </Form>
-
-        <DateTimePicker
-          isVisible={showTimePicker}
-          onConfirm={date => {
-            setDate(date);
-            setShowTimePicker(false);
-          }}
-          mode="time"
-          onCancel={() => setShowTimePicker(false)}
-        />
-      </Content>
-    </Container>
+          </Form>
+        </Content>
+      </Container>
   );
 }
 

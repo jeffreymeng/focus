@@ -1,13 +1,23 @@
 import React from 'react';
 import ToDoItemCheckbox from "./ToDoItemCheckbox";
-import { StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { auth, db } from "../firebase";
 
-export default function ToDoListItem({ id, title, subtitle, selected, onSelect }) {
+export default function ToDoListItem({id, title, subtitle, selected, onSelect }) {
   const [checked, setChecked] = React.useState(false);
 
+  function onCheckboxPress() {
+    setChecked(!checked);
+
+    const currentDoc = db.collection('users').doc(auth.currentUser.uid);
+    currentDoc.update({
+      "todos.0.checked":true
+    });
+  }
   return (
       <TouchableOpacity
           onPress={() => onSelect(id)}
+          key={id}
           style={[
             styles.item,
             { backgroundColor: selected ? '#C0C0C0' : '#F0F0F0' },
@@ -18,7 +28,7 @@ export default function ToDoListItem({ id, title, subtitle, selected, onSelect }
               style={{flex:1}}>
             <ToDoItemCheckbox
             checked={checked}
-            onPress = { () => setChecked(!checked)}
+            onPress = {onCheckboxPress}
             ></ToDoItemCheckbox>
           </View>
           <View

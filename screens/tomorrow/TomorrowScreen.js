@@ -15,8 +15,8 @@ export default function TomorrowScreen({ navigation }) {
       .doc(userId)
       .get()
       .then(doc => {
-        if (doc.exists) {
-          setTodoItems(doc.data().todos);
+        if (doc.exists && doc.data().todos) {
+          setTodoItems(doc.data().todos.filter(x => new Date(x.date).getDate() === new Date().getDate() + 1));
         }
       })
       .catch(err => {
@@ -30,7 +30,7 @@ export default function TomorrowScreen({ navigation }) {
       <Fab
         style={{backgroundColor: '#5067FF'}}
         position="bottomRight"
-        onPress={() => navigation.navigate("AddItem")}>
+        onPress={() => navigation.navigate("AddItem", {from:"Tomorrow"})}>
         <Icon name="add"/>
       </Fab>
     </View>
