@@ -1,8 +1,8 @@
 import React from 'react';
-import {Fab, Icon, View} from 'native-base';
+import { Fab, Icon, View } from 'native-base';
 
 import ToDoList from '../../components/ToDoList';
-import {auth, db} from '../../firebase';
+import { auth, db } from '../../firebase';
 
 export default function TodayScreen({ navigation }) {
   const [todoItems, setTodoItems] = React.useState([]);
@@ -11,25 +11,22 @@ export default function TodayScreen({ navigation }) {
   React.useEffect(() => {
     db.collection('users')
       .doc(userId)
-      .get()
-      .then(doc => {
+      .onSnapshot(doc => {
         if (doc.exists) {
           setTodoItems(doc.data().todos);
         }
-      })
-      .catch(err => {
-        console.log(err.message);
       });
   }, []);
 
   return (
-    <View style={{height: "100%"}}>
-      <ToDoList todoItems={todoItems}/>
+    <View style={{ height: '100%' }}>
+      <ToDoList todoItems={todoItems} />
       <Fab
-        style={{backgroundColor: '#5067FF'}}
+        style={{ backgroundColor: '#5067FF' }}
         position="bottomRight"
-        onPress={() => navigation.navigate("AddItem")}>
-        <Icon name="add"/>
+        onPress={() => navigation.navigate('AddItem')}
+      >
+        <Icon name="add" />
       </Fab>
     </View>
   );

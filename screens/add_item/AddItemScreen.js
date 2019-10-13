@@ -13,13 +13,42 @@ import {
   Label,
 } from 'native-base';
 
-export default function AddItemScreen() {
+import { db, auth } from '../../firebase';
+
+export default function AddItemScreen({ navigation }) {
   const [date, setDate] = React.useState(new Date());
   const [showTimePicker, setShowTimePicker] = React.useState(false);
   const [task, setTask] = React.useState('');
 
   function handleFormSubmit() {
-    console.log(`Adding a new tastk with label ${task} and date ${date}`);
+    if (task.length === 0) {
+      alert('Task name cannot be empty!');
+      return;
+    }
+    const currentDoc = db.collection('users').doc(auth.currentUser.uid);
+    currentDoc.get().then(doc => {
+      if (doc.data) {
+        const oldTodos = doc.data().todos;
+        currentDoc
+          .set({
+            todos: [
+              ...oldTodos,
+              {
+                id: Math.random() + 'abc',
+                title: task,
+                date: date.toISOString(),
+              },
+            ],
+          })
+          .then(() => {
+            navigation.navigate('Today');
+          })
+          .catch(err => {
+            alert(err.message);
+            navigation.navigate('Today');
+          });
+      }
+    });
   }
 
   return (
