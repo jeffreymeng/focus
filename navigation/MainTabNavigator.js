@@ -6,6 +6,7 @@ import Icon from '../components/Icon';
 import TodayScreen from '../screens/today/TodayScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import FeedScreen from "../screens/feed/FeedScreen";
+import AddFriendScreen from "../screens/feed/AddFriendScreen";
 import AddItemScreen from "../screens/add_item/AddItemScreen";
 import EditItemScreen from "../screens/edit_item/EditItemScreen";
 import WorkingScreen from "../screens/working/WorkingScreen";
@@ -71,6 +72,7 @@ TomorrowStack.path = '';
 const FeedStack = createStackNavigator(
   {
     Feed: FeedScreen,
+    AddFriend : AddFriendScreen,
   },
   config
 );

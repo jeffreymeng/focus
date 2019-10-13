@@ -1,15 +1,15 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, Button, StyleSheet, Text, View } from 'react-native';
 
 import Bo from '../../components/BoldText';
 import FeedItem from './FeedItem';
-import { Icon } from 'native-base';
+import { Icon, Fab } from 'native-base';
 
 import { db } from '../../firebase';
 
 let It = props => <Text style={{ fontStyle: 'italic' }}>{props.children}</Text>;
 
-export default function LinksScreen() {
+export default function LinksScreen({navigation}) {
   const [feedData, setFeedData] = React.useState([]);
   React.useEffect(
     () =>
@@ -29,7 +29,7 @@ export default function LinksScreen() {
 
   return (
     <View style={{ display: 'flex', height: '100%' }}>
-      <View
+      {/*<View
         style={{
           paddingTop: 20,
           paddingLeft: 20,
@@ -49,7 +49,7 @@ export default function LinksScreen() {
           {'\n'}
           <Bo>Nathan Wang:</Bo> Working on <It>Fixing Bugs</It>
         </Text>
-      </View>
+      </View>*/}
       <ScrollView style={styles.container}>
         {feedData.map(feedItem => (
           <FeedItem key={feedItem.id}>
@@ -70,12 +70,19 @@ export default function LinksScreen() {
           </FeedItem>
         ))}
       </ScrollView>
+      <Fab
+        style={{ backgroundColor: '#5067FF' }}
+        position="bottomRight"
+        onPress={() => navigation.navigate('AddFriend', { from: 'Feed' })}
+      >
+        <Icon name="add" />
+      </Fab>
     </View>
   );
 }
 
 LinksScreen.navigationOptions = {
-  title: 'Feed',
+  title: 'Social Feed',
 };
 
 const styles = StyleSheet.create({

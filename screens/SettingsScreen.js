@@ -10,9 +10,18 @@ import {
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
 
 export default function SettingsScreen({ navigation }) {
+  const [username, setUsername] = React.useState('');
+
+  React.useEffect(() => {
+    db.collection('users')
+      .doc(auth.currentUser.uid)
+      .get()
+      .then(doc => setUsername(doc.data().username));
+  }, []);
+
   function logout() {
     auth.signOut();
     navigation.navigate('Auth');
@@ -51,17 +60,19 @@ export default function SettingsScreen({ navigation }) {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.appFocusView}>
-        <Text style={styles.title}>Focus</Text>
-        <Text style={styles.subtitle}>1.0.0</Text>
-      <Text style={styles.email}>{auth.currentUser.email}</Text>
+        <Text style={styles.username}>{username}</Text>
+        <Text style={styles.email}>{auth.currentUser.email}</Text>
       </View>
       <Button title="Logout" onPress={logout} />
-      <Button title="Send Notification" onPress={sendNotificationImmediately} />
-      <Button title="Schedule Notification after 5 seconds" onPress={scheduleNotification} />
+      {/*<Button title="Send Notification" onPress={sendNotificationImmediately} />
+      <Button
+        title="Schedule Notification after 5 seconds"
+        onPress={scheduleNotification}
+      />
       <Button
         title="Ask for Notification permissions"
         onPress={askPermissions}
-      />
+      />*/}
     </ScrollView>
   );
 }
@@ -85,8 +96,11 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
   },
-  email: {
-    fontSize: 24,
+  username: {
+    fontSize: 28,
     marginTop: 40,
+  },
+  email: {
+    fontSize: 20,
   },
 });
