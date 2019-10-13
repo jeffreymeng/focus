@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, DatePickerIOS } from 'react-native';
+import { StyleSheet } from 'react-native';
 import {
   Container,
   View,
@@ -12,8 +12,9 @@ import {
   Button,
   Label,
 } from 'native-base';
+import DateTimePicker from "react-native-modal-datetime-picker";
 
-import { db, auth } from '../../firebase';
+import { db, auth } from "../../firebase";
 
 export default function AddItemScreen({ navigation }) {
   const [date, setDate] = React.useState(new Date());
@@ -56,7 +57,7 @@ export default function AddItemScreen({ navigation }) {
       <Content style={styles.container}>
         <Form>
           <Item inlineLabel>
-            <Label>Add Task</Label>
+            <Label>Task Name</Label>
             <Input value={task} onChangeText={setTask} />
           </Item>
           <Item inlineLabel>
@@ -69,13 +70,20 @@ export default function AddItemScreen({ navigation }) {
               <Text>{date ? date.toString() : ''}</Text>
             </Button>
           </Item>
-          {showTimePicker && (
-            <DatePickerIOS date={date} onDateChange={setDate} />
-          )}
-          <Button onPress={handleFormSubmit}>
-            <Text>Click Me!</Text>
+          <Button style={{ marginTop: 15 }} onPress={handleFormSubmit}>
+            <Text>Add Task</Text>
           </Button>
         </Form>
+
+        <DateTimePicker
+          isVisible={showTimePicker}
+          onConfirm={date => {
+            setDate(date);
+            setShowTimePicker(false);
+          }}
+          mode="time"
+          onCancel={() => setShowTimePicker(false)}
+        />
       </Content>
     </Container>
   );
