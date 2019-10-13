@@ -3,13 +3,13 @@ import { ScrollView, Button, StyleSheet, Text, View } from 'react-native';
 
 import Bo from '../../components/BoldText';
 import FeedItem from './FeedItem';
-import { Icon } from 'native-base';
+import { Icon, Fab } from 'native-base';
 
 import { db } from '../../firebase';
 
 let It = props => <Text style={{ fontStyle: 'italic' }}>{props.children}</Text>;
 
-export default function LinksScreen() {
+export default function LinksScreen({navigation}) {
   const [feedData, setFeedData] = React.useState([]);
   React.useEffect(
     () =>
@@ -70,6 +70,13 @@ export default function LinksScreen() {
           </FeedItem>
         ))}
       </ScrollView>
+      <Fab
+        style={{ backgroundColor: '#5067FF' }}
+        position="bottomRight"
+        onPress={() => navigation.navigate('AddFriend', { from: 'Feed' })}
+      >
+        <Icon name="add" />
+      </Fab>
     </View>
   );
 }
