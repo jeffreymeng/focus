@@ -1,12 +1,11 @@
 import React from 'react';
-import { Fab, Icon, View } from 'native-base';
-import TabIcon from '../../components/Icon';
+import {Fab, Icon, View} from 'native-base';
 
 import ToDoList from '../../components/ToDoList';
-import { auth, db } from '../../firebase';
-import { Platform } from 'react-native';
+import {auth, db} from '../../firebase';
+import {Alert} from 'react-native';
 
-export default function TomorrowScreen({ navigation }) {
+export default function TomorrowScreen({navigation}) {
   const [todoItems, setTodoItems] = React.useState([]);
   const userId = auth.currentUser.uid;
 
@@ -34,21 +33,25 @@ export default function TomorrowScreen({ navigation }) {
   );
 
   function onCompletionChange(id, checked) {
-    let newTodo = [];
-    setTodoItems(
-      todoItems.map(todo => {
-        if (todo.id === id) {
-          newTodo = { ...todo, checked };
-          return newTodo;
-        }
-        return todo;
-      })
+    Alert.alert(
+      "Reschedule Task?",
+      'Would you like to reschedule this task to today?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => {
+          },
+          style: 'cancel',
+        },
+        {
+          text: 'Reschedule', onPress: () => {
+            console.log("RESCHEDULE");
+            // TODO add resched code
+          }
+        },
+      ],
+      {cancelable: false},
     );
-    db.collection('users')
-      .doc(userId)
-      .collection('todos')
-      .doc(id)
-      .set(newTodo);
   }
 
   function editTodo(id, title, date, checked) {
@@ -62,18 +65,18 @@ export default function TomorrowScreen({ navigation }) {
   }
 
   return (
-    <View style={{ height: '100%' }}>
+    <View style={{height: '100%'}}>
       <ToDoList
         todoItems={todoItems}
         onCompletionChange={onCompletionChange}
         onSelected={editTodo}
       />
       <Fab
-        style={{ backgroundColor: '#5067FF' }}
+        style={{backgroundColor: '#5067FF'}}
         position="bottomRight"
-        onPress={() => navigation.navigate('AddItem', { from: 'Tomorrow' })}
+        onPress={() => navigation.navigate('AddItem', {from: 'Tomorrow'})}
       >
-        <Icon name="add" />
+        <Icon name="add"/>
       </Fab>
     </View>
   );

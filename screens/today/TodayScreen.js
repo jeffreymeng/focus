@@ -40,12 +40,26 @@ export default function TodayScreen({ navigation }) {
   );
 
   function onCompletionChange(id) {
-    const currentTodo = todoItems.filter(todo => todo.id === id)[0];
+    let currentTodo = todoItems.filter(todo => todo.id === id)[0];
     if (!currentTodo.checked)
       navigation.navigate('Working', {
         from: 'Today',
         todo: currentTodo,
       });
+    else {
+      const todoId = id;
+      delete currentTodo.id;
+      db.collection('users')
+        .doc(auth.currentUser.uid)
+        .collection('todos')
+        .doc(todoId)
+        .set({
+          ...currentTodo,
+          checked: false,
+        })
+        .then(() => {
+        });
+    }
   }
 
   function editTodo(id, title, date, checked) {
