@@ -2,24 +2,6 @@ import React from 'react';
 import ToDoList from '../../components/ToDoList';
 import { db } from '../../firebase';
 
-const TEST_DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'Do Math Homework',
-    subtitle: 'subtitle',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Do Chem Homework',
-    subtitle: 'subtitle',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Feed the cat',
-    subtitle: 'subtitle',
-  },
-];
-
 export default function TodayScreen() {
   const [todoItems, setTodoItems] = React.useState([]);
 
@@ -32,8 +14,11 @@ export default function TodayScreen() {
           console.log(JSON.stringify(doc.data().todos));
           setTodoItems(doc.data().todos);
         }
+      })
+      .catch(err => {
+        console.log(err.message);
       });
-  });
+  }, [setTodoItems]);
 
   return <ToDoList todoItems={todoItems} />;
 }
