@@ -6,6 +6,7 @@ import {
   DatePickerIOS,
   Dimensions,
   View,
+  ScrollView,
 } from 'react-native';
 import {
   Container,
@@ -105,7 +106,7 @@ export default function WorkingScreen({ navigation }) {
   }
 
   return (
-    <>
+    <ScrollView>
       <View style={styles.container}>
         <Form>
           <Text>You are now working on</Text>
@@ -132,7 +133,7 @@ export default function WorkingScreen({ navigation }) {
           </Button>
         </View>
       )}
-    </>
+    </ScrollView>
   );
 }
 
