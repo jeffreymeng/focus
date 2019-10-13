@@ -3,37 +3,32 @@ import ToDoItemCheckbox from "./ToDoItemCheckbox";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { auth, db } from "../firebase";
 
-export default function ToDoListItem({id, title, subtitle, selected, onSelect }) {
-  const [checked, setChecked] = React.useState(false);
+export default function ToDoListItem({id, index, title, subtitle, selected, onSelect, onCheckboxPress, initialChecked }) {
+  const [checked, setChecked] = React.useState(initialChecked);
 
-  function onCheckboxPress() {
+  function _onCheckboxPress() {
     setChecked(!checked);
-
-    const currentDoc = db.collection('users').doc(auth.currentUser.uid);
-    currentDoc.update({
-      "todos.0.checked":true
-    });
+    onCheckboxPress(index, !checked);
   }
   return (
       <TouchableOpacity
           onPress={() => onSelect(id)}
           key={id}
-          style={[
-            styles.item,
-            { backgroundColor: selected ? '#C0C0C0' : '#F0F0F0' },
-          ]}
+          style={checked ?
+              [styles.item, styles.itemChecked] :
+            styles.item}
       >
         <View style={{flexDirection:'row'}}>
           <View
               style={{flex:1}}>
             <ToDoItemCheckbox
             checked={checked}
-            onPress = {onCheckboxPress}
+            onPress = {_onCheckboxPress}
             ></ToDoItemCheckbox>
           </View>
           <View
               style={{flex:3}}>
-            <Text style={styles.title}>{title}</Text>
+            <Text style={checked ? [styles.title, styles.titleChecked] : styles.title}>{title}</Text>
             <Text style={styles.subtitle}>{subtitle}</Text>
           </View>
         </View>
@@ -50,8 +45,16 @@ const styles = StyleSheet.create({
     marginHorizontal: 12,
 
   },
+  itemChecked: {
+    backgroundColor:'#C0C0C0',
+
+  },
   title: {
     fontSize: 24,
+
+  },
+  titleChecked:{
+    textDecorationLine:'line-through',
   },
   subtitle: {
     fontSize: 12,

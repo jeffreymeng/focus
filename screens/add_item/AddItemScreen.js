@@ -19,39 +19,55 @@ export default function AddItemScreen({ navigation }) {
   const params = navigation.state.params;
   let today = new Date();
 
-  const [date, setDate] = React.useState(params.from === "Today" ? today : today.setDate(today.getDate() + 1));
+  const [date, setDate] = React.useState(params.date ? params.date : params.from === "Today" ? today : today.setDate(today.getDate() + 1));
   const [showTimePicker, setShowTimePicker] = React.useState(false);
-  const [task, setTask] = React.useState('');
+  const [task, setTask] = React.useState(params.title || '');
 
   function handleFormSubmit() {
     if (task.length === 0) {
-      alert('Task name cannot be empty!');
+      alert('Please enter a task name');
       return;
     }
     const currentDoc = db.collection('users').doc(auth.currentUser.uid);
-    currentDoc.get().then(doc => {
-      if (doc.data) {
-        const oldTodos = doc.data().todos;
-        currentDoc
-            .set({
-              todos: [
-                ...oldTodos,
-                {
-                  title: task,
-                  id:new Array(32).fill("").map(() => "ABCDEFGHIJKLMNOPQRSTUVQXYZabcdefghijklmnopqrstuvwxyz0123456789".split("")[Math.floor(Math.random() * (26 * 2 + 10))]).join(""),
-                  date: date.toISOString(),
-                },
-              ],
-            })
-            .then(() => {
-              navigation.navigate(params.from);
-            })
-            .catch(err => {
-              alert(err.message);
-              navigation.navigate(params.from);
-            });
-      }
-    });
+    let item = {
+      title: task,
+      id: new Array(32).fill("").map(() => "ABCDEFGHIJKLMNOPQRSTUVQXYZabcdefghijklmnopqrstuvwxyz0123456789".split("")[Math.floor(Math.random() * (26 * 2 + 10))]).join(""),
+      date: date.toISOString(),
+      checked: params.checked || false,
+    };
+
+      currentDoc.get().then(doc => {
+        if (doc.data) {
+          let data = doc.data().todos;
+          let item = {
+            title: task,
+            id: new Array(32).fill("").map(() => "ABCDEFGHIJKLMNOPQRSTUVQXYZabcdefghijklmnopqrstuvwxyz0123456789".split("")[Math.floor(Math.random() * (26 * 2 + 10))]).join(""),
+            date: date.toISOString(),
+            checked: false
+          };
+          console.log(params.updateIndex)
+          if (params.updateIndex) {
+            data[updateIndex] = item;
+            db
+                .collection('users')
+                .doc(userId)
+                .update("todos",data);
+          } else {
+            currentDoc
+                .set({
+                  todos: doc.data().todos ? [...doc.data().todos, item] : [item],
+                })
+                .then(() => {
+                  navigation.navigate(params.from);
+                })
+                .catch(err => {
+                  alert(err.message);
+                  navigation.navigate(params.from);
+                });
+          }
+        }
+      });
+
   }
 
   return (

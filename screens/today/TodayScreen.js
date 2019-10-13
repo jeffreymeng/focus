@@ -20,10 +20,21 @@ export default function TodayScreen({ navigation }) {
         }),
     []
   );
+  function onCompletionChange(index, checked) {
+    todoItems[index].checked = checked;
+    db
+        .collection('users')
+        .doc(userId)
+        .update("todos",todoItems);
+  }
+
 
   return (
     <View style={{ height: '100%' }}>
-      <ToDoList todoItems={todoItems} />
+      <ToDoList todoItems={todoItems}
+                onCompletionChange={onCompletionChange}
+                onSelected={(index, title, date, checked) => navigation.navigate('AddItem',{from:"Today",title:title,date:date,updateIndex:index,checked:checked})}
+      />
 
       <Fab
         style={{ backgroundColor: '#5067FF' }}

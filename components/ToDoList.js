@@ -6,15 +6,9 @@ import {
 } from 'react-native';
 import ToDoListItem from '../components/ToDoListItem';
 
-export default function ToDoList({ todoItems }) {
-  const [selected, setSelected] = React.useState(new Map());
+export default function ToDoList({ todoItems, onCompletionChange, onSelected }) {
 
-  const onSelect = React.useCallback(id => {
-    const newSelected = new Map(selected);
-    newSelected.set(id, !selected.get(id));
 
-    setSelected(newSelected);
-  }, [selected]);
 
   function renderTime(time) {
     const t = new Date(time);
@@ -27,18 +21,19 @@ export default function ToDoList({ todoItems }) {
     <SafeAreaView style={styles.container}>
       <FlatList
         data={todoItems}
-        renderItem={({ item }) => (
+        renderItem={({ item,index }) => (
           <ToDoListItem
+            index={index}
             key={item.id}
             id={item.id}
             title={item.title}
             subtitle={renderTime(item.date)}
-            selected={!!selected.get(item.id)}
-            onSelect={onSelect}
+            onSelect={() => onSelected(index, item.title, new Date(item.date),item.checked)}
+            onCheckboxPress={onCompletionChange}
+            initialChecked={item.checked}
           />
         )}
         keyExtractor={item => item.id}
-        extraData={selected}
       />
 
     </SafeAreaView>
