@@ -39,19 +39,6 @@ export default function ToDoList({ todoItems }) {
         keyExtractor={item => item.id}
         extraData={selected}
       />
-      <View>
-        <TouchableHighlight
-          style={styles.addButton}
-          underlayColor="#ccc"
-          onPress={() => alert('Yaay!')}
-        >
-          <Icon
-            name={Platform.OS === 'ios' ? `ios-add` : 'md-add'}
-            size={50}
-            color={'white'}
-          />
-        </TouchableHighlight>
-      </View>
     </SafeAreaView>
   );
 }
