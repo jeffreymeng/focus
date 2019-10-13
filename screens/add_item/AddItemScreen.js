@@ -20,7 +20,7 @@ export default function AddItemScreen({ navigation }) {
 
   let today = new Date();
   let initialDate =
-    params.from === 'Today' ? today : today.setDate(today.getDate() + 1);
+    params.from === 'Today' ? today : new Date(today.setDate(today.getDate() + 1));
   if (params.date) initialDate = params.date;
   const [date, setDate] = React.useState(initialDate);
 
