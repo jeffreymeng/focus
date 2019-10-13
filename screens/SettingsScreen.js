@@ -71,7 +71,7 @@ SettingsScreen.navigationOptions = {
 };
 
 const styles = StyleSheet.create({
-  appFocusView:{
+  appInfoView:{
     justifyContent: 'center',
     alignItems: 'center',
     padding:24,
