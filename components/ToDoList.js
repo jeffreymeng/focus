@@ -2,11 +2,12 @@ import React from 'react';
 import {
   SafeAreaView,
   FlatList,
-  StyleSheet,
+  StyleSheet, TouchableHighlight, Text, View, Platform,
 
-} from 'react-native';
+} from "react-native";
 import ToDoListItem from '../components/ToDoListItem';
 import Constants from 'expo-constants';
+import TabBarIcon from "./TabBarIcon";
 
 const DATA = [
   {
@@ -58,6 +59,24 @@ export default function ToDoList() {
             keyExtractor={item => item.id}
             extraData={selected}
         />
+        <View>
+          <TouchableHighlight
+
+              style = {styles.addButton}
+              underlayColor = '#ccc'
+              onPress = { () => alert('Yaay!') }
+          >
+            <TabBarIcon
+                name={
+                  Platform.OS === 'ios'
+                      ? `ios-add`
+                      : 'md-add'
+                }
+                size={50}
+                color={'white'}
+            />
+          </TouchableHighlight>
+        </View>
       </SafeAreaView>
   );
 }
@@ -67,5 +86,16 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: Constants.statusBarHeight,
   },
+  addButton:{
+    borderRadius: 30,
+    width: 60,
+    height: 60,
+    backgroundColor:'#809fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    right:20,
+    position:'absolute',
+    bottom:20,
+  }
 
 });
