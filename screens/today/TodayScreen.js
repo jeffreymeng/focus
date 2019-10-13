@@ -8,15 +8,18 @@ export default function TodayScreen({ navigation }) {
   const [todoItems, setTodoItems] = React.useState([]);
   const userId = auth.currentUser.uid;
 
-  React.useEffect(() => {
-    db.collection('users')
-      .doc(userId)
-      .onSnapshot(doc => {
-        if (doc.exists) {
-          setTodoItems(doc.data().todos);
-        }
-      });
-  }, []);
+  React.useEffect(
+    () =>
+      db
+        .collection('users')
+        .doc(userId)
+        .onSnapshot(doc => {
+          if (doc.exists) {
+            setTodoItems(doc.data().todos);
+          }
+        }),
+    []
+  );
 
   return (
     <View style={{ height: '100%' }}>

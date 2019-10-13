@@ -1,6 +1,5 @@
 import React from 'react';
-import { AsyncStorage, ScrollView, Button } from 'react-native';
-import { ExpoConfigView } from '@expo/samples';
+import { AsyncStorage, ScrollView, Button, StyleSheet } from 'react-native';
 
 import { auth } from '../firebase';
 
@@ -10,18 +9,19 @@ export default function SettingsScreen({ navigation }) {
     navigation.navigate('Auth');
   }
 
-  /**
-   * Go ahead and delete ExpoConfigView and replace it with your content;
-   * we just wanted to give you a quick view of your config.
-   */
   return (
-    <ScrollView>
+    <ScrollView style={styles.container}>
       <Button title="Logout" onPress={logout} />
-      <ExpoConfigView />
     </ScrollView>
   );
 }
 
 SettingsScreen.navigationOptions = {
-  title: 'app.json',
+  title: 'Settings',
 };
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+  },
+});
