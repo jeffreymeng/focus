@@ -1,15 +1,12 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  FlatList,
-  StyleSheet,
-} from 'react-native';
+import { SafeAreaView, FlatList, StyleSheet } from 'react-native';
 import ToDoListItem from '../components/ToDoListItem';
 
-export default function ToDoList({ todoItems, onCompletionChange, onSelected }) {
-
-
-
+export default function ToDoList({
+  todoItems,
+  onCompletionChange,
+  onSelected,
+}) {
   function renderTime(time) {
     const t = new Date(time);
     t.setSeconds(0);
@@ -21,21 +18,22 @@ export default function ToDoList({ todoItems, onCompletionChange, onSelected }) 
     <SafeAreaView style={styles.container}>
       <FlatList
         data={todoItems}
-        renderItem={({ item,index }) => (
+        renderItem={({ item, index }) => (
           <ToDoListItem
             index={index}
             key={item.id}
             id={item.id}
             title={item.title}
             subtitle={renderTime(item.date)}
-            onSelect={() => onSelected(index, item.title, new Date(item.date),item.checked)}
+            onSelect={() =>
+              onSelected(item.id, item.title, new Date(item.date), item.checked)
+            }
             onCheckboxPress={onCompletionChange}
             initialChecked={item.checked}
           />
         )}
         keyExtractor={item => item.id}
       />
-
     </SafeAreaView>
   );
 }
@@ -43,5 +41,5 @@ export default function ToDoList({ todoItems, onCompletionChange, onSelected }) 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  }
+  },
 });

@@ -15,15 +15,14 @@ import {
 
 import { db, auth } from '../../firebase';
 
-export default function AddItemScreen({ navigation }) {
+export default function EditItemScreen({ navigation }) {
   const params = navigation.state.params;
-
   let today = new Date();
+
   let initialDate =
     params.from === 'Today' ? today : today.setDate(today.getDate() + 1);
   if (params.date) initialDate = params.date;
   const [date, setDate] = React.useState(initialDate);
-
   const [showTimePicker, setShowTimePicker] = React.useState(false);
   const [task, setTask] = React.useState(params.title || '');
 
@@ -32,16 +31,21 @@ export default function AddItemScreen({ navigation }) {
       alert('Please enter a task name');
       return;
     }
-
     db.collection('users')
       .doc(auth.currentUser.uid)
       .collection('todos')
-      .add({
+      .doc(params.id)
+      .set({
         title: task,
         date: date.toISOString(),
-        checked: false,
-      }).then(() => {
-        navigation.navigate(params.from)
+        checked: params.checked || false,
+      })
+      .then(() => {
+        navigation.navigate(params.from);
+      })
+      .catch(err => {
+        alert(err.message);
+        navigation.navigate(params.from);
       });
   }
 
@@ -50,7 +54,7 @@ export default function AddItemScreen({ navigation }) {
       <Content style={styles.container}>
         <Form>
           <Item inlineLabel>
-            <Label>Add Task</Label>
+            <Label>Edit Task</Label>
             <Input value={task} onChangeText={setTask} />
           </Item>
           <Item inlineLabel>
@@ -75,7 +79,7 @@ export default function AddItemScreen({ navigation }) {
             <DatePickerIOS date={date} onDateChange={setDate} mode={'time'} />
           )}
           <Button onPress={handleFormSubmit}>
-            <Text>Add Item</Text>
+            <Text>Done</Text>
           </Button>
         </Form>
       </Content>
@@ -83,8 +87,8 @@ export default function AddItemScreen({ navigation }) {
   );
 }
 
-AddItemScreen.navigationOptions = {
-  title: 'New Todo',
+EditItemScreen.navigationOptions = {
+  title: 'Edit Todo',
 };
 
 const styles = StyleSheet.create({
