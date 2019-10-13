@@ -3,10 +3,11 @@ import { Platform, StyleSheet, Text, TouchableHighlight } from "react-native";
 import Icon from "./Icon";
 
 export default function ToDoItemCheckbox(props) {
+
   return (
       <TouchableHighlight
 
-          style = {this.state.checked ? [styles.checkbox, styles.checkboxChecked] : styles.checkbox}
+          style = {props.checked ? [styles.checkbox, styles.checkboxChecked] : styles.checkbox}
           underlayColor = '#ccc'
           onPress = { props.onPress }
       >

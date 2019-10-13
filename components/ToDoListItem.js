@@ -3,6 +3,8 @@ import ToDoItemCheckbox from "./ToDoItemCheckbox";
 import { StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 
 export default function ToDoListItem({ id, title, subtitle, selected, onSelect }) {
+  const [checked, setChecked] = React.useState(false);
+
   return (
       <TouchableOpacity
           onPress={() => onSelect(id)}
@@ -15,8 +17,8 @@ export default function ToDoListItem({ id, title, subtitle, selected, onSelect }
           <View
               style={{flex:1}}>
             <ToDoItemCheckbox
-            checked={false}
-            onPress = { () => this.setState({checked:!this.state.checked})}
+            checked={checked}
+            onPress = { () => setChecked(!checked)}
             ></ToDoItemCheckbox>
           </View>
           <View
