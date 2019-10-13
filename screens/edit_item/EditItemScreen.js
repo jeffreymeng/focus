@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, DatePickerIOS } from 'react-native';
+import { StyleSheet, DatePickerIOS, Alert } from 'react-native';
 import {
   Container,
   View,
@@ -59,7 +59,21 @@ export default function EditItemScreen({ navigation }) {
         navigation.navigate(params.from);
       });
   }
-
+  function openDeleteAlert() {
+    Alert.alert(
+        "Delete '" + task + "'?",
+        'Warning!',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'Delete', style:'destructive', onPress: () => deleteTodo()},
+        ],
+        {cancelable: false},
+    )
+  }
   return (
     <Container>
       <Content style={styles.container}>
@@ -92,7 +106,7 @@ export default function EditItemScreen({ navigation }) {
           <Button style={styles.button} onPress={handleFormSubmit}>
             <Text>Done</Text>
           </Button>
-          <Button style={styles.button} danger onPress={deleteTodo}>
+          <Button style={styles.button} danger onPress={openDeleteAlert}>
             <Text>Delete</Text>
           </Button>
         </Form>

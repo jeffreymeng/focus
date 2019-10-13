@@ -18,6 +18,8 @@ export default function ToDoList({
     <SafeAreaView style={styles.container}>
       <FlatList
         data={todoItems}
+        onRefresh={function(){}}
+        refreshing={false}
         renderItem={({ item, index }) => (
           <ToDoListItem
             index={index}
@@ -28,6 +30,7 @@ export default function ToDoList({
             onSelect={() =>
               onSelected(item.id, item.title, new Date(item.date), item.checked)
             }
+
             onCheckboxPress={onCompletionChange}
             initialChecked={item.checked}
           />
