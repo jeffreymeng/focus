@@ -10,8 +10,7 @@ import {
 } from 'react-native';
 import ToDoListItem from '../components/ToDoListItem';
 import Constants from 'expo-constants';
-import Icon from "./Icon";
-
+import Icon from './Icon';
 
 export default function ToDoList({ todoItems }) {
   const [selected, setSelected] = React.useState(new Map());
@@ -23,6 +22,13 @@ export default function ToDoList({ todoItems }) {
     setSelected(newSelected);
   }, [selected]);
 
+  function renderTime(time) {
+    const t = new Date(time);
+    t.setSeconds(0);
+
+    return t.toLocaleTimeString().replace(':00 ', ' ');
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
@@ -31,7 +37,7 @@ export default function ToDoList({ todoItems }) {
           <ToDoListItem
             id={item.id}
             title={item.title}
-            subtitle={item.subtitle}
+            subtitle={renderTime(item.date)}
             selected={!!selected.get(item.id)}
             onSelect={onSelect}
           />
@@ -42,7 +48,7 @@ export default function ToDoList({ todoItems }) {
       <View>
         <TouchableHighlight
           style={styles.addButton}
-          underlayColor="#ccc"
+          underlayColor="#809fff"
           onPress={() => alert('Yaay!')}
         >
           <Icon

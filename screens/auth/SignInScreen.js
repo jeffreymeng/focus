@@ -42,13 +42,13 @@ export default function LinksScreen({ navigation }) {
         onChangeText={text => setPassword(text)}
         value={password}
       />
+      <Button title="Login" onPress={loginFirebase} />
       <View style={styles.buttonWrapper}>
-        <Button style={styles.loginBtn} title="Login" onPress={loginFirebase} />
         <Button
-          style={styles.registerBtn}
           title="Register"
           onPress={() => navigation.navigate('Register')}
         />
+        <Button title="Reset Password" />
       </View>
     </ScrollView>
   );
@@ -77,9 +77,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   buttonWrapper: {
+    marginTop: 300,
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  loginBtn: {},
-  registerBtn: {},
 });

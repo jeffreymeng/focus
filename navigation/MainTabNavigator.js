@@ -7,6 +7,7 @@ import TodayScreen from '../screens/today/TodayScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import FeedScreen from "../screens/feed/FeedScreen";
 import AddItemScreen from "../screens/add_item/AddItemScreen";
+import TomorrowScreen from "../screens/tomorrow/TomorrowScreen";
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -36,6 +37,30 @@ TodayStack.navigationOptions = {
 };
 
 TodayStack.path = '';
+
+const TomorrowStack = createStackNavigator(
+  {
+    Tomorrow: TomorrowScreen,
+    AddItem: AddItemScreen,
+  },
+  config
+);
+
+TomorrowStack.navigationOptions = {
+  tabBarLabel: 'Tomorrow',
+  tabBarIcon: ({ focused }) => (
+    <Icon
+      focused={focused}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-information-circle${focused ? '' : '-outline'}`
+          : 'md-information-circle'
+      }
+    />
+  ),
+};
+
+TomorrowStack.path = '';
 
 const FeedStack = createStackNavigator(
   {
@@ -71,6 +96,7 @@ SettingsStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
   TodayStack,
+  TomorrowStack,
   FeedStack,
   SettingsStack,
 });

@@ -7,7 +7,7 @@ import {
   Button,
   View,
 } from 'react-native';
-import { auth } from '../../firebase';
+import { auth, db } from '../../firebase';
 
 export default function LinksScreen({ navigation }) {
   const [username, setUsername] = React.useState('');
@@ -15,8 +15,13 @@ export default function LinksScreen({ navigation }) {
 
   function registerFirebase() {
     auth.createUserWithEmailAndPassword(username, password).then(
-      () => {
-        navigation.navigate('Main');
+      ({ user }) => {
+        db.collection('users')
+          .doc(user.uid)
+          .set({ todos: [] })
+          .then(() => {
+            navigation.navigate('Main');
+          });
       },
       error => {
         alert(error.message);

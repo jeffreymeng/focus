@@ -1,7 +1,8 @@
 import React from 'react';
-import { Text, View, ScrollView, Button, StyleSheet } from "react-native";
+import { AsyncStorage, Text, View, ScrollView, Button, StyleSheet } from "react-native";
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
+
 
 import { auth } from '../firebase';
 
@@ -50,7 +51,7 @@ export default function SettingsScreen({ navigation }) {
    * we just wanted to give you a quick view of your config.
    */
   return (
-    <ScrollView>
+    <ScrollView style={styles.container}>
       <Button title="Logout" onPress={logout} />
       <Button title="Send Notification" onPress={this.sendNotificationImmediately} />
       <Button title="Schedule Notification" onPress={this.scheduleNotification} />
@@ -81,5 +82,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 24,
   },
-
+  container: {
+    padding: 20,
+  },
 });
