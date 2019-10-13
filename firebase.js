@@ -3,14 +3,14 @@ import '@firebase/firestore';
 import '@firebase/auth';
 
 const config = {
-  apiKey: 'AIzaSyASbc6vJVacauzByLySuyRk2oCJiOc4tZI',
-  authDomain: 'focus-44e3a.firebaseapp.com',
-  databaseURL: 'https://focus-44e3a.firebaseio.com',
-  projectId: 'focus-44e3a',
-  storageBucket: 'focus-44e3a.appspot.com',
-  messagingSenderId: '812071678933',
-  appId: '1:812071678933:web:657efbada10248db55835c',
-  measurementId: 'G-FNTSV4W072',
+  apiKey: 'AIzaSyABzoCYBTltSmqKOzNY_SZmeQqzaaTLdTs',
+  authDomain: 'quintuplecs-focus.firebaseapp.com',
+  databaseURL: 'https://quintuplecs-focus.firebaseio.com',
+  projectId: 'quintuplecs-focus',
+  storageBucket: 'quintuplecs-focus.appspot.com',
+  messagingSenderId: '268211947321',
+  appId: '1:268211947321:web:0a9ad1d8e6df505122cae8',
+  measurementId: 'G-R57H824BQQ',
 };
 
 firebase.initializeApp(config);

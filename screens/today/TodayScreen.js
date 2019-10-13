@@ -21,21 +21,16 @@ const TEST_DATA = [
 ];
 
 export default function TodayScreen() {
-  const [todoItems, setData] = React.useState([]);
+  const [todoItems, setTodoItems] = React.useState([]);
 
   React.useEffect(() => {
-    console.log('test');
-    setTimeout(() => {
-      setData(TEST_DATA);
-    }, 100);
-    return;
-
     db.collection('users')
       .doc('john')
       .get()
       .then(doc => {
         if (doc.exists) {
-          setData(doc.todoItems().todo);
+          console.log(JSON.stringify(doc.data().todos));
+          setTodoItems(doc.data().todos);
         }
       });
   });
