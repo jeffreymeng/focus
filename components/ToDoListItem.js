@@ -50,9 +50,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: 40,
     height: 40,
-    backgroundColor:'#809fff',
+    backgroundColor:'#e6ecff',
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth:6,
+    borderColor:'#809fff'
 
   }
 });

@@ -7,4 +7,3 @@ export default function TodayScreen() {
 TodayScreen.navigationOptions = {
   title: "Today",
 };
-
