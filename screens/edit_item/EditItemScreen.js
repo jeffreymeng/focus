@@ -61,7 +61,7 @@ export default function EditItemScreen({ navigation }) {
   function openDeleteAlert() {
     Alert.alert(
         "Delete '" + task + "'?",
-        'Warning!',
+        'It will be lost forever!',
         [
           {
             text: 'Cancel',
