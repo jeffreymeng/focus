@@ -17,9 +17,7 @@ export default function LinksScreen({ navigation }) {
   function loginFirebase() {
     auth.signInWithEmailAndPassword(username, password).then(
       ({ user }) => {
-        AsyncStorage.setItem('userToken', user.uid).then(() => {
-          navigation.navigate('Main');
-        });
+        navigation.navigate('Main');
       },
       error => {
         alert(error.message);

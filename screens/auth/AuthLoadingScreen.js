@@ -1,23 +1,12 @@
 import React from 'react';
-import {
-  ActivityIndicator,
-  AsyncStorage,
-  StatusBar,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { ActivityIndicator, StatusBar, StyleSheet, View } from 'react-native';
+import { auth } from '../../firebase';
 
 export default function AuthLoadingScreen({ navigation }) {
   React.useEffect(() => {
-    const _bootstrapAsync = async () => {
-      const userToken = await AsyncStorage.getItem('userToken');
-
-      // This will switch to the App screen or Auth screen and this loading
-      // screen will be unmounted and thrown away.
-      navigation.navigate(userToken ? 'Main' : 'Auth');
-    };
-
-    _bootstrapAsync().then();
+    auth.onAuthStateChanged(user => {
+      navigation.navigate(user ? 'Main' : 'Auth');
+    });
   });
 
   // Fetch the token from storage then navigate to our appropriate place

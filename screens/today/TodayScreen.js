@@ -1,24 +1,24 @@
 import React from 'react';
 import ToDoList from '../../components/ToDoList';
-import { db } from '../../firebase';
+import { db, auth } from '../../firebase';
 
 export default function TodayScreen() {
   const [todoItems, setTodoItems] = React.useState([]);
+  const userId = auth.currentUser.uid;
 
   React.useEffect(() => {
     db.collection('users')
-      .doc('john')
+      .doc(userId)
       .get()
       .then(doc => {
         if (doc.exists) {
-          console.log(JSON.stringify(doc.data().todos));
           setTodoItems(doc.data().todos);
         }
       })
       .catch(err => {
         console.log(err.message);
       });
-  }, [setTodoItems]);
+  }, []);
 
   return <ToDoList todoItems={todoItems} />;
 }

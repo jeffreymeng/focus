@@ -6,10 +6,8 @@ import { auth } from '../firebase';
 
 export default function SettingsScreen({ navigation }) {
   function logout() {
-    AsyncStorage.setItem('userToken', '').then(() => {
-      auth.signOut();
-      navigation.navigate('Auth');
-    });
+    auth.signOut();
+    navigation.navigate('Auth');
   }
 
   /**
