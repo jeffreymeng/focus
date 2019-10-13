@@ -1,10 +1,10 @@
 import React from 'react';
-import {Fab, Icon, View} from 'native-base';
-import TabIcon from "../../components/Icon";
+import { Fab, Icon, View } from 'native-base';
+import TabIcon from '../../components/Icon';
 
 import ToDoList from '../../components/ToDoList';
-import {auth, db} from '../../firebase';
-import {Platform} from "react-native";
+import { auth, db } from '../../firebase';
+import { Platform } from 'react-native';
 
 export default function TomorrowScreen({ navigation }) {
   const [todoItems, setTodoItems] = React.useState([]);
@@ -13,25 +13,32 @@ export default function TomorrowScreen({ navigation }) {
   React.useEffect(() => {
     db.collection('users')
       .doc(userId)
-      .get()
-      .then(doc => {
-        if (doc.exists && doc.data().todos) {
-          setTodoItems(doc.data().todos.filter(x => new Date(x.date).getDate() === new Date().getDate() + 1));
-        }
-      })
-      .catch(err => {
-        console.log(err.message);
+      .collection('todos')
+      .onSnapshot(querySnapshot => {
+        let todos = [];
+        querySnapshot.forEach(doc => {
+          todos.push({
+            id: doc.id,
+            ...doc.data(),
+          });
+        });
+        setTodoItems(
+          todos.filter(
+            x => new Date(x.date).getDate() === new Date().getDate() + 1
+          )
+        );
       });
   }, []);
 
   return (
-    <View style={{height: "100%"}}>
-      <ToDoList todoItems={todoItems}/>
+    <View style={{ height: '100%' }}>
+      <ToDoList todoItems={todoItems} />
       <Fab
-        style={{backgroundColor: '#5067FF'}}
+        style={{ backgroundColor: '#5067FF' }}
         position="bottomRight"
-        onPress={() => navigation.navigate("AddItem", {from:"Tomorrow"})}>
-        <Icon name="add"/>
+        onPress={() => navigation.navigate('AddItem', { from: 'Tomorrow' })}
+      >
+        <Icon name="add" />
       </Fab>
     </View>
   );

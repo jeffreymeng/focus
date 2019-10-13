@@ -49,6 +49,17 @@ export default function EditItemScreen({ navigation }) {
       });
   }
 
+  function deleteTodo() {
+    db.collection('users')
+      .doc(auth.currentUser.uid)
+      .collection('todos')
+      .doc(params.id)
+      .delete()
+      .then(() => {
+        navigation.navigate(params.from);
+      });
+  }
+
   return (
     <Container>
       <Content style={styles.container}>
@@ -78,8 +89,11 @@ export default function EditItemScreen({ navigation }) {
           {showTimePicker && (
             <DatePickerIOS date={date} onDateChange={setDate} mode={'time'} />
           )}
-          <Button onPress={handleFormSubmit}>
+          <Button style={styles.button} onPress={handleFormSubmit}>
             <Text>Done</Text>
+          </Button>
+          <Button style={styles.button} danger onPress={deleteTodo}>
+            <Text>Delete</Text>
           </Button>
         </Form>
       </Content>
@@ -94,5 +108,8 @@ EditItemScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+  },
+  button: {
+    marginTop: 10,
   },
 });
