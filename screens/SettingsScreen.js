@@ -34,13 +34,14 @@ export default function SettingsScreen({ navigation }) {
     console.log(notificationId); // can be saved in AsyncStorage or send to server
   };
   this.scheduleNotification = async () => {
+    await Notifications.cancelAllScheduledNotificationsAsync();
     let notificationId = Notifications.scheduleLocalNotificationAsync(
         {
-          title: "I'm Scheduled",
-          body: 'Not the same body! Sent at ' + (new Date() + ''),
+          title: "Time to work on Chapter 5.1 Math Homework!",
+          body: 'Chapter 5.1 Math Homework is scheduled for right now!',
         },
         {
-          time: new Date().getTime() + 100,
+          time: new Date().getTime() + 8000,
         },
     );
     console.log(notificationId);

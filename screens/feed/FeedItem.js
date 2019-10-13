@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import BoldText from "../../components/BoldText";
 
 const styles = StyleSheet.create({
   container: {
@@ -10,13 +9,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const FeedItem = ({ data }) => {
+const FeedItem = ({ children }) => {
   return (
     <View style={styles.container}>
       <Text>
-        <BoldText>{data.person}</BoldText> earned&nbsp;
-        <BoldText>{data.value}</BoldText> points by completing&nbsp;
-        <Text style={{fontStyle: "italic"}}>{data.task}</Text>!
+        {children}
       </Text>
     </View>
   );
