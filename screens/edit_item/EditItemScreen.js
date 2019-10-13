@@ -65,7 +65,7 @@ export default function EditItemScreen({ navigation }) {
         [
           {
             text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
+            onPress: () => {},
             style: 'cancel',
           },
           {text: 'Delete', style:'destructive', onPress: () => deleteTodo()},

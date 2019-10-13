@@ -30,9 +30,8 @@ export default function ToDoList({
             onSelect={() =>
               onSelected(item.id, item.title, new Date(item.date), item.checked)
             }
-
             onCheckboxPress={onCompletionChange}
-            initialChecked={item.checked}
+            checked={item.checked}
           />
         )}
         keyExtractor={item => item.id}

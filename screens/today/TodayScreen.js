@@ -15,6 +15,7 @@ export default function TodayScreen({ navigation }) {
         .doc(userId)
         .collection('todos')
         .onSnapshot(querySnapshot => {
+          console.log('got update');
           let todos = [];
           querySnapshot.forEach(doc => {
             todos.push({
@@ -31,22 +32,13 @@ export default function TodayScreen({ navigation }) {
     []
   );
 
-  function onCompletionChange(id, checked) {
-    let newTodo = [];
-    setTodoItems(
-      todoItems.map(todo => {
-        if (todo.id === id) {
-          newTodo = { ...todo, checked };
-          return newTodo;
-        }
-        return todo;
-      })
-    );
-    db.collection('users')
-      .doc(userId)
-      .collection('todos')
-      .doc(id)
-      .set(newTodo);
+  function onCompletionChange(id) {
+    const currentTodo = todoItems.filter(todo => todo.id === id)[0];
+    if (!currentTodo.checked)
+      navigation.navigate('Working', {
+        from: 'Today',
+        todo: currentTodo,
+      });
   }
 
   function editTodo(id, title, date, checked) {

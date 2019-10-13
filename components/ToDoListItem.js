@@ -11,14 +11,8 @@ export default function ToDoListItem({
   selected,
   onSelect,
   onCheckboxPress,
-  initialChecked,
+  checked,
 }) {
-  const [checked, setChecked] = React.useState(initialChecked);
-
-  function _onCheckboxPress() {
-    setChecked(!checked);
-    onCheckboxPress(id, !checked);
-  }
   return (
     <TouchableOpacity
       onPress={() => onSelect(id)}
@@ -27,7 +21,10 @@ export default function ToDoListItem({
     >
       <View style={{ flexDirection: 'row' }}>
         <View style={{ flex: 1 }}>
-          <ToDoItemCheckbox checked={checked} onPress={_onCheckboxPress} />
+          <ToDoItemCheckbox
+            checked={checked}
+            onPress={() => onCheckboxPress(id)}
+          />
         </View>
         <View style={{ flex: 3 }}>
           <Text

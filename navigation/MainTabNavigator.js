@@ -8,6 +8,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 import FeedScreen from "../screens/feed/FeedScreen";
 import AddItemScreen from "../screens/add_item/AddItemScreen";
 import EditItemScreen from "../screens/edit_item/EditItemScreen";
+import WorkingScreen from "../screens/working/WorkingScreen";
 import TomorrowScreen from "../screens/tomorrow/TomorrowScreen";
 
 const config = Platform.select({
@@ -19,6 +20,7 @@ const TodayStack = createStackNavigator(
   {
     Today: TodayScreen,
     AddItem: AddItemScreen,
+    Working: WorkingScreen,
     EditItem: EditItemScreen,
   },
   config
@@ -44,6 +46,7 @@ const TomorrowStack = createStackNavigator(
   {
     Tomorrow: TomorrowScreen,
     AddItem: AddItemScreen,
+    Working: WorkingScreen,
     EditItem: EditItemScreen,
   },
   config
