@@ -149,10 +149,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   buttonContainer: {
-    width: 80,
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row',
+    flexDirection: 'column',
+    display: "flex",
+    paddingTop: 30,
   },
   mainText: {
     fontSize: 36,
@@ -163,6 +164,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     justifyContent: 'center',
     alignItems: 'center',
+    width: "100%",
   },
   timePicker: {
     padding: 10,
