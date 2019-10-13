@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import ToDoListItem from '../components/ToDoListItem';
 import Constants from 'expo-constants';
-import TabBarIcon from "./TabBarIcon";
+import Icon from "./Icon";
 import db from './firebase';
 
 const DATA = [
@@ -76,7 +76,7 @@ export default function ToDoList() {
               underlayColor = '#ccc'
               onPress = { () => alert('Yaay!') }
           >
-            <TabBarIcon
+            <Icon
                 name={
                   Platform.OS === 'ios'
                       ? `ios-add`

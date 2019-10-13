@@ -1,4 +1,5 @@
 import React from 'react';
+import ToDoItemCheckbox from "./ToDoItemCheckbox";
 import { StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 
 export default function ToDoListItem({ id, title, subtitle, selected, onSelect }) {
@@ -13,14 +14,10 @@ export default function ToDoListItem({ id, title, subtitle, selected, onSelect }
         <View style={{flexDirection:'row'}}>
           <View
               style={{flex:1}}>
-            <TouchableHighlight
-
-                style = {styles.checkbox}
-                underlayColor = '#ccc'
-                onPress = { () => alert('Yaay!') }
-            >
-              <Text></Text>
-            </TouchableHighlight>
+            <ToDoItemCheckbox
+            checked={false}
+            onPress = { () => this.setState({checked:!this.state.checked})}
+            ></ToDoItemCheckbox>
           </View>
           <View
               style={{flex:3}}>
@@ -46,15 +43,5 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 12,
   },
-  checkbox:{
-    borderRadius: 20,
-    width: 40,
-    height: 40,
-    backgroundColor:'#e6ecff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth:6,
-    borderColor:'#809fff'
 
-  }
 });
