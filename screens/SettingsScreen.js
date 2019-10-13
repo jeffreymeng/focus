@@ -43,14 +43,11 @@ export default function SettingsScreen({ navigation }) {
         body: 'Chapter 5.1 Math Homework is scheduled for right now!',
       },
       {
-        time: new Date().getTime() + 8000,
+        time: new Date().getTime() + 5000,
       }
     );
   }
-  /**
-   * Go ahead and delete ExpoConfigView and replace it with your content;
-   * we just wanted to give you a quick view of your config.
-   */
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.appFocusView}>
@@ -60,7 +57,7 @@ export default function SettingsScreen({ navigation }) {
       </View>
       <Button title="Logout" onPress={logout} />
       <Button title="Send Notification" onPress={sendNotificationImmediately} />
-      <Button title="Schedule Notification" onPress={scheduleNotification} />
+      <Button title="Schedule Notification after 5 seconds" onPress={scheduleNotification} />
       <Button
         title="Ask for Notification permissions"
         onPress={askPermissions}
