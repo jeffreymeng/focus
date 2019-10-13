@@ -41,6 +41,7 @@ export default function LinksScreen({ navigation }) {
         onChangeText={text => setUsername(text)}
         value={username}
       />
+      <Text style={styles.label}>Email</Text>
       <TextInput
         style={styles.input}
         keyboardType="email-address"

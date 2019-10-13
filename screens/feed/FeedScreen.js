@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, Button, StyleSheet, Text, View } from 'react-native';
 
 import Bo from '../../components/BoldText';
 import FeedItem from './FeedItem';
@@ -29,7 +29,7 @@ export default function LinksScreen() {
 
   return (
     <View style={{ display: 'flex', height: '100%' }}>
-      <View
+      {/*<View
         style={{
           paddingTop: 20,
           paddingLeft: 20,
@@ -49,7 +49,7 @@ export default function LinksScreen() {
           {'\n'}
           <Bo>Nathan Wang:</Bo> Working on <It>Fixing Bugs</It>
         </Text>
-      </View>
+      </View>*/}
       <ScrollView style={styles.container}>
         {feedData.map(feedItem => (
           <FeedItem key={feedItem.id}>
@@ -75,7 +75,7 @@ export default function LinksScreen() {
 }
 
 LinksScreen.navigationOptions = {
-  title: 'Feed',
+  title: 'Social Feed',
 };
 
 const styles = StyleSheet.create({
