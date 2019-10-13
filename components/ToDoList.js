@@ -1,5 +1,6 @@
 import React from 'react';
-import { SafeAreaView, FlatList, StyleSheet } from 'react-native';
+import { SafeAreaView, FlatList, StyleSheet, View, Platform } from 'react-native';
+import Icon from '../components/Icon';
 import ToDoListItem from '../components/ToDoListItem';
 
 export default function ToDoList({
@@ -20,7 +21,10 @@ export default function ToDoList({
         data={todoItems}
         onRefresh={function(){}}
         refreshing={false}
-        renderItem={({ item, index }) => (
+        ListEmptyComponent={<View style={styles.emptyContainer}>
+          <Icon size={100} name={ Platform.OS === 'ios' ? 'ios-star' : 'md-star'}></Icon>
+        </View>}
+            renderItem={({ item, index }) => (
           <ToDoListItem
             index={index}
             key={item.id}
@@ -45,4 +49,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  emptyContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 24,
+  }
 });

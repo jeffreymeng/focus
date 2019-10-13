@@ -25,7 +25,14 @@ export default function TodayScreen({ navigation }) {
           setTodoItems(
             todos.filter(
               x => new Date(x.date).getDate() === new Date().getDate()
-            )
+            ).sort(function(x, y) {
+              let a = new Date(x.date).getTime(), b = new Date(y.date).getTime();
+
+              // Checked ones always show up first.
+              if (x.checked) a -= Math.pow(10,13);
+              if (y.checked) b -= Math.pow(10,13);
+              return a - b;
+            })
           );
         }),
     []
@@ -80,4 +87,5 @@ export default function TodayScreen({ navigation }) {
 
 TodayScreen.navigationOptions = {
   title: 'Today',
+
 };
