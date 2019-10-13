@@ -19,7 +19,7 @@ export default function AddItemScreen({ navigation }) {
   const params = navigation.state.params;
   let today = new Date();
 
-  const [date, setDate] = React.useState(params.date ? params.date : params.from === "Today" ? today : today.setDate(today.getDate() + 1));
+  const [date, setDate] = React.useState(params.date ? params.date : params.from === "Today" ? today : new Date(today.setDate(today.getDate() + 1)));
   const [showTimePicker, setShowTimePicker] = React.useState(false);
   const [task, setTask] = React.useState(params.title || '');
 
