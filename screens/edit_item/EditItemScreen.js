@@ -40,11 +40,10 @@ export default function EditItemScreen({ navigation }) {
         date: date.toISOString(),
         checked: params.checked || false,
       })
-      .then(() => {
-        navigation.navigate(params.from);
-      })
       .catch(err => {
         alert(err.message);
+      })
+      .finally(() => {
         navigation.navigate(params.from);
       });
   }

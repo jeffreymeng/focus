@@ -15,8 +15,16 @@ export default function LinksScreen({ navigation }) {
 
   function registerFirebase() {
     auth.createUserWithEmailAndPassword(username, password).then(
-      () => {
-        navigation.navigate('Main');
+      ({ user }) => {
+        db.collection('users')
+          .doc(user.uid)
+          .set({ exists: true })
+          .catch(err => {
+            alert(err.message);
+          })
+          .finally(() => {
+            navigation.navigate('Main');
+          });
       },
       error => {
         alert(error.message);
