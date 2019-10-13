@@ -8,6 +8,7 @@ import {
 import ToDoListItem from '../components/ToDoListItem';
 import Constants from 'expo-constants';
 import TabBarIcon from "./TabBarIcon";
+import db from './firebase';
 
 const DATA = [
   {
@@ -32,6 +33,7 @@ const DATA = [
 
 export default function ToDoList() {
   const [selected, setSelected] = React.useState(new Map());
+  const [data, setData] = React.useState([]);
 
   const onSelect = React.useCallback(
       id => {
@@ -43,10 +45,18 @@ export default function ToDoList() {
       [selected],
   );
 
+  React.useEffect(() => {
+    db.collection('users').doc('john').get().then(doc => {
+      if (doc.exists) {
+        setData(doc.data().todo);
+      }
+    })
+  });
+
   return (
       <SafeAreaView style={styles.container}>
         <FlatList
-            data={DATA}
+            data={data}
             renderItem={({ item }) => (
                 <ToDoListItem
                     id={item.id}
