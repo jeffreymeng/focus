@@ -59,7 +59,6 @@ export default function ToDoList({ todoItems }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Constants.statusBarHeight,
   },
   addButton: {
     borderRadius: 30,

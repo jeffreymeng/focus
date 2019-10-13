@@ -28,8 +28,8 @@ TodayStack.navigationOptions = {
       focused={focused}
       name={
         Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
+          ? `ios-calendar`
+          : 'md-calendar_today'
       }
     />
   ),
@@ -47,7 +47,7 @@ const FeedStack = createStackNavigator(
 FeedStack.navigationOptions = {
   tabBarLabel: 'Feed',
   tabBarIcon: ({ focused }) => (
-    <Icon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
+    <Icon focused={focused} name={Platform.OS === 'ios' ? 'ios-people' : 'md-people'} />
   ),
 };
 
@@ -63,7 +63,7 @@ const SettingsStack = createStackNavigator(
 SettingsStack.navigationOptions = {
   tabBarLabel: 'Settings',
   tabBarIcon: ({ focused }) => (
-    <Icon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
+    <Icon focused={focused} name={Platform.OS === 'ios' ? 'ios-cog' : 'md-cog'} />
   ),
 };
 

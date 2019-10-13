@@ -1,6 +1,7 @@
 import React from 'react';
-import { AsyncStorage, ScrollView, Button } from 'react-native';
-import { ExpoConfigView } from '@expo/samples';
+import { Text, View, ScrollView, Button, StyleSheet } from "react-native";
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
 
 import { auth } from '../firebase';
 
@@ -10,6 +11,40 @@ export default function SettingsScreen({ navigation }) {
     navigation.navigate('Auth');
   }
 
+  this.askPermissions = async () => {
+    const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      console.log(false);
+      return false;
+    }
+    console.log(true);
+    return true;
+  };
+  this.sendNotificationImmediately = async () => {
+    let notificationId = await Notifications.presentLocalNotificationAsync({
+      title: 'This is crazy',
+      body: 'Your mind will blow after reading this',
+    });
+    console.log(notificationId); // can be saved in AsyncStorage or send to server
+  };
+  this.scheduleNotification = async () => {
+    let notificationId = Notifications.scheduleLocalNotificationAsync(
+        {
+          title: "I'm Scheduled",
+          body: 'Not the same body! Sent at ' + new Date().getTime(),
+        },
+        {
+          repeat: 'minute',
+          time: new Date().getTime() + 10000,
+        },
+    );
+    console.log(notificationId);
+  };
   /**
    * Go ahead and delete ExpoConfigView and replace it with your content;
    * we just wanted to give you a quick view of your config.
@@ -17,11 +52,34 @@ export default function SettingsScreen({ navigation }) {
   return (
     <ScrollView>
       <Button title="Logout" onPress={logout} />
-      <ExpoConfigView />
+      <Button title="Send Notification" onPress={this.sendNotificationImmediately} />
+      <Button title="Schedule Notification" onPress={this.scheduleNotification} />
+      <Button title="Ask for Notification permissions" onPress={this.askPermissions} />
+      <View style={styles.appInfoView}>
+        <Text style={styles.title}>Focus</Text>
+        <Text style={styles.subtitle}>1.0.0</Text>
+      </View>
     </ScrollView>
   );
 }
 
+
+
 SettingsScreen.navigationOptions = {
-  title: 'app.json',
+  title: 'Settings',
 };
+
+const styles = StyleSheet.create({
+  appFocusView:{
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding:24,
+  },
+  title: {
+    fontSize: 48,
+  },
+  subtitle: {
+    fontSize: 24,
+  },
+
+});
