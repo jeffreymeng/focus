@@ -1,11 +1,11 @@
 import React from 'react';
-import {Fab, Icon, View} from 'native-base';
+import { Fab, Icon, View } from 'native-base';
 
 import ToDoList from '../../components/ToDoList';
-import {auth, db} from '../../firebase';
-import {Alert} from 'react-native';
+import { auth, db } from '../../firebase';
+import { Alert } from 'react-native';
 
-export default function TomorrowScreen({navigation}) {
+export default function TomorrowScreen({ navigation }) {
   const [todoItems, setTodoItems] = React.useState([]);
   const userId = auth.currentUser.uid;
 
@@ -36,36 +36,32 @@ export default function TomorrowScreen({navigation}) {
     let currentTodo = todoItems.filter(todo => todo.id === id)[0];
 
     Alert.alert(
-      "Reschedule '" + currentTodo.title +  "'?",
+      "Reschedule '" + currentTodo.title + "'?",
       'Would you like to reschedule this task to today?',
       [
         {
           text: 'Cancel',
-          onPress: () => {
-          },
+          onPress: () => {},
           style: 'cancel',
         },
         {
-          text: 'Reschedule', onPress: () => {
-
+          text: 'Reschedule',
+          onPress: () => {
             const now = new Date();
             currentTodo.date = now;
-            console.log("RESCHEDULE");
-            db
-                .collection('users')
-                .doc(userId)
-                .collection('todos')
-                .doc(id).update({
-              date:now.toISOString()
-            });
-            navigation.navigate('Working', {
-              from: 'Today',
-              todo:currentTodo
-            });
-          }
+            console.log('RESCHEDULE');
+            db.collection('users')
+              .doc(userId)
+              .collection('todos')
+              .doc(id)
+              .update({
+                date: now.toISOString(),
+              });
+            navigation.navigate('Today');
+          },
         },
       ],
-      {cancelable: false},
+      { cancelable: false }
     );
   }
 
@@ -80,18 +76,18 @@ export default function TomorrowScreen({navigation}) {
   }
 
   return (
-    <View style={{height: '100%'}}>
+    <View style={{ height: '100%' }}>
       <ToDoList
         todoItems={todoItems}
         onCompletionChange={onCompletionChange}
         onSelected={editTodo}
       />
       <Fab
-        style={{backgroundColor: '#5067FF'}}
+        style={{ backgroundColor: '#5067FF' }}
         position="bottomRight"
-        onPress={() => navigation.navigate('AddItem', {from: 'Tomorrow'})}
+        onPress={() => navigation.navigate('AddItem', { from: 'Tomorrow' })}
       >
-        <Icon name="add"/>
+        <Icon name="add" />
       </Fab>
     </View>
   );
