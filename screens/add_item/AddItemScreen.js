@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, DatePickerIOS } from 'react-native';
+import { StyleSheet } from 'react-native';
 import {
   Container,
   View,
@@ -12,6 +12,9 @@ import {
   Button,
   Label,
 } from 'native-base';
+import DateTimePicker from "react-native-modal-datetime-picker";
+
+import { db, auth } from "../../firebase";
 
 export default function AddItemScreen({ navigation }) {
   const [date, setDate] = React.useState(new Date());
@@ -54,7 +57,7 @@ export default function AddItemScreen({ navigation }) {
       <Content style={styles.container}>
         <Form>
           <Item inlineLabel>
-            <Label>Add Task</Label>
+            <Label>Task Name</Label>
             <Input value={task} onChangeText={setTask} />
           </Item>
           <Item inlineLabel>
@@ -67,69 +70,23 @@ export default function AddItemScreen({ navigation }) {
               <Text>{date ? date.toString() : ''}</Text>
             </Button>
           </Item>
-          {showTimePicker && (
-            <DatePickerIOS date={date} onDateChange={setDate} />
-          )}
-          <Button onPress={handleFormSubmit}>
-            <Text>Click Me!</Text>
+          <Button style={{ marginTop: 15 }} onPress={handleFormSubmit}>
+            <Text>Add Task</Text>
           </Button>
         </Form>
+
+        <DateTimePicker
+          isVisible={showTimePicker}
+          onConfirm={date => {
+            setDate(date);
+            setShowTimePicker(false);
+          }}
+          mode="time"
+          onCancel={() => setShowTimePicker(false)}
+        />
       </Content>
     </Container>
   );
-=======
-  setShowTimePicker = (value) => {
-    console.log(value);
-    this.setState({
-      showTimePicker: value
-    });
-  };
-
-  setDate = (date) => {
-    this.setState({date});
-  };
-
-  handleTaskChange = (task) => {
-    this.setState({task});
-  };
-
-  handleFormSubmit = () => {
-    console.log("Adding a new task with label " + this.state.task + " and date " + this.state.date);
-  };
-
-  render() {
-    return (
-      <Container>
-        <Content style={{paddingTop: 10}}>
-          <Item inlineLabel>
-            <Label>Add Task</Label>
-            <Input value={this.state.task} onChangeText={this.handleTaskChange}/>
-          </Item>
-
-          <Button onPress={() => this.setShowTimePicker(true)}>
-            <Text>Schedule Time</Text>
-          </Button>
-
-          <Text>{this.state.date && `Scheduled time: ${this.state.date.toString()}`}</Text>
-
-          <DateTimePicker
-            isVisible={this.state.showTimePicker}
-            onConfirm={date => {
-              this.setDate(date);
-              this.setShowTimePicker(false);
-            }}
-            mode="time"
-            onCancel={() => this.setShowTimePicker(false)}
-          />
-
-          <Button onPress={this.handleFormSubmit}>
-            <Text>Add Task</Text>
-          </Button>
-        </Content>
-      </Container>
-    );
-  }
->>>>>>> add tomorrow screen
 }
 
 AddItemScreen.navigationOptions = {
