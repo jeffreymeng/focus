@@ -76,7 +76,7 @@ export default function WorkingScreen({ navigation }) {
   function snoozeTodo() {
     Alert.alert(
       'Snooze todo?',
-      `Are you sure you want to snooze this task to ${date.getHours()}:${date.getMinutes()} ${
+      `Are you sure you want to snooze this task to ${date.getHours()%12}:${date.getMinutes()} ${
         date.getHours() > 12 ? 'PM' : 'AM'
       }?`,
       [
